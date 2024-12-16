@@ -1,0 +1,4 @@
+C:\Users\wojt6\source\repos\Project_1_OOP_Wojciech_Dabrowski\obj\Debug\net8.0\Project_1_OOP_Wojciech_Dabrowski.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\wojt6\source\repos\Project_1_OOP_Wojciech_Dabrowski\obj\Debug\net8.0\Project_1_OOP_Wojciech_Dabrowski.AssemblyInfoInputs.cache
+C:\Users\wojt6\source\repos\Project_1_OOP_Wojciech_Dabrowski\obj\Debug\net8.0\Project_1_OOP_Wojciech_Dabrowski.AssemblyInfo.cs
+C:\Users\wojt6\source\repos\Project_1_OOP_Wojciech_Dabrowski\obj\Debug\net8.0\Project_1_OOP_Wojciech_Dabrowski.csproj.CoreCompileInputs.cache
