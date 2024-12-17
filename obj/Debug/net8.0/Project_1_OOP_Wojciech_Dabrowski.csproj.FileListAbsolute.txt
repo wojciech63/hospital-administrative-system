@@ -2,3 +2,14 @@ C:\Users\wojt6\source\repos\Project_1_OOP_Wojciech_Dabrowski\obj\Debug\net8.0\Pr
 C:\Users\wojt6\source\repos\Project_1_OOP_Wojciech_Dabrowski\obj\Debug\net8.0\Project_1_OOP_Wojciech_Dabrowski.AssemblyInfoInputs.cache
 C:\Users\wojt6\source\repos\Project_1_OOP_Wojciech_Dabrowski\obj\Debug\net8.0\Project_1_OOP_Wojciech_Dabrowski.AssemblyInfo.cs
 C:\Users\wojt6\source\repos\Project_1_OOP_Wojciech_Dabrowski\obj\Debug\net8.0\Project_1_OOP_Wojciech_Dabrowski.csproj.CoreCompileInputs.cache
+C:\Users\wojt6\source\repos\Project_1_OOP_Wojciech_Dabrowski\obj\Debug\net8.0\Project_1_OOP_Wojciech_Dabrowski.sourcelink.json
+C:\Users\wojt6\source\repos\Project_1_OOP_Wojciech_Dabrowski\bin\Debug\net8.0\Project_1_OOP_Wojciech_Dabrowski.exe
+C:\Users\wojt6\source\repos\Project_1_OOP_Wojciech_Dabrowski\bin\Debug\net8.0\Project_1_OOP_Wojciech_Dabrowski.deps.json
+C:\Users\wojt6\source\repos\Project_1_OOP_Wojciech_Dabrowski\bin\Debug\net8.0\Project_1_OOP_Wojciech_Dabrowski.runtimeconfig.json
+C:\Users\wojt6\source\repos\Project_1_OOP_Wojciech_Dabrowski\bin\Debug\net8.0\Project_1_OOP_Wojciech_Dabrowski.dll
+C:\Users\wojt6\source\repos\Project_1_OOP_Wojciech_Dabrowski\bin\Debug\net8.0\Project_1_OOP_Wojciech_Dabrowski.pdb
+C:\Users\wojt6\source\repos\Project_1_OOP_Wojciech_Dabrowski\obj\Debug\net8.0\Project_1_OOP_Wojciech_Dabrowski.dll
+C:\Users\wojt6\source\repos\Project_1_OOP_Wojciech_Dabrowski\obj\Debug\net8.0\refint\Project_1_OOP_Wojciech_Dabrowski.dll
+C:\Users\wojt6\source\repos\Project_1_OOP_Wojciech_Dabrowski\obj\Debug\net8.0\Project_1_OOP_Wojciech_Dabrowski.pdb
+C:\Users\wojt6\source\repos\Project_1_OOP_Wojciech_Dabrowski\obj\Debug\net8.0\Project_1_OOP_Wojciech_Dabrowski.genruntimeconfig.cache
+C:\Users\wojt6\source\repos\Project_1_OOP_Wojciech_Dabrowski\obj\Debug\net8.0\ref\Project_1_OOP_Wojciech_Dabrowski.dll

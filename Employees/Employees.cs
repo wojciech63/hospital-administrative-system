@@ -83,8 +83,8 @@ class Employees
         }
 
     }
-
-    public class Nurse : Employee
+    
+    /*public class Nurse : Employee
     {
 
     }
@@ -93,4 +93,6 @@ class Employees
     {
 
     }
+    */
+   
 }
