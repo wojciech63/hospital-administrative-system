@@ -3,6 +3,16 @@ using System.Text;
 
 class Employees
 {
+    public enum Specialization
+    {
+        Cardiologist,
+        Urologist,
+        Neurologist,
+        Laryngologist
+    }
+
+
+
     public abstract class Employee
     {
         public string Name { get; set; }
@@ -18,8 +28,7 @@ class Employees
             PESEL = pesel;
             Username = username;
             SetPassword(password);
-        }
-
+        }        
         public void SetPassword(string password)
         {
             PasswordHash = HashPassword(password);
@@ -45,15 +54,6 @@ class Employees
         }
     }
 
-    public enum Specialization
-    {
-        Cardiologist,
-        Urologist,
-        Neurologist,
-        Laryngologist
-    }
-
-
     public class Doctor : Employee
     {
         public Specialization Specialty { get; set; }
@@ -73,6 +73,8 @@ class Employees
                 }
             }
         }
+
+        private List<DateTime> onCallDays = new List<DateTime>();
 
         public Doctor(string name, string surname, int pesel, string username, string password, Specialization specialty, string pwz) : base(name, surname, pesel, username, password)
         {
