@@ -42,5 +42,29 @@ namespace Project_1_OOP_Wojciech_Dabrowski.Employees
             PWZ = pwz;
         }
 
+        public bool AddOnCallDay(DateTime day)
+        {
+            if (onCallDays.Contains(day))
+            {
+                Console.WriteLine("Error: This day is already assigned");
+                return false;
+            }
+
+            if (onCallDays.Any(d => Math.Abs((d - day).Days) == 1))
+            {
+                Console.WriteLine("Error: Cannot schedule consecutive days.");
+                return false;
+            }
+
+            if (onCallDays.Count(d => d.Month == day.Month) > 10)
+            {
+                Console.WriteLine("Error: Cannot have more than 10 days per month");
+                return false;
+            }
+
+            onCallDays.Add(day);
+            return true;
+        }
+
     }
 }
