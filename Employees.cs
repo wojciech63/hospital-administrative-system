@@ -3,7 +3,7 @@ using System.Text;
 
 class Employees
 {
-    public class Employee
+    public abstract class Employee
     {
         public string Name { get; set; }
         public string Surname { get; set; }
@@ -45,16 +45,41 @@ class Employees
         }
     }
 
+    public enum Specialization
+    {
+        Cardiologist,
+        Urologist,
+        Neurologist,
+        Laryngologist
+    }
+
+
     public class Doctor : Employee
     {
-        public string Specialty { get; set; }
-        public string PWZ { get; set; }
+        public Specialization Specialty { get; set; }
+        private string _pwz;
+        public string PWZ
+        {
+            get { return _pwz; }
+            set
+            {
+                if (value.Length == 7 && value.All(char.IsDigit))
+                {
+                    _pwz = value;
+                }
+                else
+                {
+                    throw new ArgumentException("PWZ number must be 7 digits long and contain numbers only");
+                }
+            }
+        }
 
-        public Doctor(string name, string surname, int pesel, string username, string password, string specialty, string pwz) : base(name, surname, pesel, username, password)
+        public Doctor(string name, string surname, int pesel, string username, string password, Specialization specialty, string pwz) : base(name, surname, pesel, username, password)
         {
             Specialty = specialty;
             PWZ = pwz;
         }
+
     }
 
     public class Nurse : Employee
