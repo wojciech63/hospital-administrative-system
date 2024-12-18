@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Employees;
 
 namespace Project_1_OOP_Wojciech_Dabrowski.Employees
 {
@@ -36,6 +35,7 @@ namespace Project_1_OOP_Wojciech_Dabrowski.Employees
         }
 
         private readonly Dictionary<int, List<DateTime>> _onCallSchedule = new();
+        private static readonly Dictionary<DateTime, HashSet<Specialization>> OnCallScheduleByDay = new();
 
         public Doctor(string name, string surname, int pesel, string username, string password, Specialization specialty, string pwz) : base(name, surname, pesel, username, password)
         {
@@ -47,7 +47,13 @@ namespace Project_1_OOP_Wojciech_Dabrowski.Employees
         {
 
             int month = day.Month;
-            
+
+            if (OnCallScheduleByDay.ContainsKey(day) && OnCallScheduleByDay[day].Contains(Specialty))
+            {
+                Console.WriteLine($"Error: {Specialty} is already on-call on {day.ToShortDateString()}");
+                return false;
+            }
+                       
             if (!_onCallSchedule.ContainsKey(month))
             {
                 _onCallSchedule[month] = new List<DateTime>();
@@ -66,6 +72,11 @@ namespace Project_1_OOP_Wojciech_Dabrowski.Employees
             }
 
             _onCallSchedule[month].Add(day);
+            if (!OnCallScheduleByDay.ContainsKey(day))
+            {
+                OnCallScheduleByDay[day] = new HashSet<Specialization>();
+            }
+            OnCallScheduleByDay[day].Add(Specialty);
             Console.WriteLine($"On call day {day:dd.MM.yyyy} added succesfully");
             return true;
         }

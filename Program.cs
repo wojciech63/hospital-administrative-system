@@ -25,7 +25,7 @@ class Program
         }
         */
 
-        Nurse nurse = new Nurse("Jane", "Smith", 987654321, "jsmith", "password321");
+        /*Nurse nurse = new Nurse("Jane", "Smith", 987654321, "jsmith", "password321");
         Console.WriteLine("===== Doctor Details =====");
         Console.WriteLine($"Name: {nurse.Name} {nurse.Surname}");
         Console.WriteLine("===== Password Test =====");
@@ -41,5 +41,14 @@ class Program
         }
         nurse.AddOnCallDay(new DateTime(2024, 12, 2));
         nurse.DisplayOnCallSchedule(12);
+        */
+
+        Doctor doctor1 = new Doctor("John", "Doe", 123456789, "johndoe", "password123", Doctor.Specialization.Cardiologist, "1234567");
+        Doctor doctor2 = new Doctor("Jane", "Smith", 987654321, "janesmith", "password456", Doctor.Specialization.Cardiologist, "7654321");
+
+        DateTime onCallDay = new DateTime(2024, 5, 15);
+
+        doctor1.AddOnCallDay(onCallDay);
+        doctor2.AddOnCallDay(onCallDay); 
     }
 }
