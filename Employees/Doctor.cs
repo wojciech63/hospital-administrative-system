@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,7 +35,7 @@ namespace Project_1_OOP_Wojciech_Dabrowski.Employees
             }
         }
 
-        private List<DateTime> onCallDays = new List<DateTime>();
+        private readonly Dictionary<int, List<DateTime>> _onCallSchedule = new();
 
         public Doctor(string name, string surname, int pesel, string username, string password, Specialization specialty, string pwz) : base(name, surname, pesel, username, password)
         {
@@ -44,27 +45,45 @@ namespace Project_1_OOP_Wojciech_Dabrowski.Employees
 
         public bool AddOnCallDay(DateTime day)
         {
-            if (onCallDays.Contains(day))
+
+            int month = day.Month;
+            
+            if (!_onCallSchedule.ContainsKey(month))
             {
-                Console.WriteLine("Error: This day is already assigned");
+                _onCallSchedule[month] = new List<DateTime>();
+            }
+
+            if (_onCallSchedule[month].Count >= 10)
+            {
+                Console.WriteLine($"Error: Cannot assign more than 10 on-call days for {month}");
                 return false;
             }
 
-            if (onCallDays.Any(d => Math.Abs((d - day).Days) == 1))
+            if (_onCallSchedule[month].Any(d => Math.Abs((d - day).Days) == 1))
             {
-                Console.WriteLine("Error: Cannot schedule consecutive days.");
+                Console.WriteLine($"Error: Cannot assign consecutive on-call days in {month}");
                 return false;
             }
 
-            if (onCallDays.Count(d => d.Month == day.Month) > 10)
-            {
-                Console.WriteLine("Error: Cannot have more than 10 days per month");
-                return false;
-            }
-
-            onCallDays.Add(day);
+            _onCallSchedule[month].Add(day);
+            Console.WriteLine($"On call day {day:dd.MM.yyyy} added succesfully");
             return true;
         }
 
+        public void DisplayOnCallSchedule(int month)
+        {
+            if (_onCallSchedule.ContainsKey(month))
+            {
+                Console.WriteLine($"On-call schedule for {Name} in month {month}");
+                foreach (var day in _onCallSchedule[month])
+                {
+                    Console.WriteLine(day.ToShortDateString());
+                }
+            }
+            else
+            {
+                Console.WriteLine($"No on-call schedule for {Name} in month {month}");
+            }
+        }
     }
 }
