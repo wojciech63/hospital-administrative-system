@@ -54,7 +54,7 @@ class Employees
         }
     }
 
-    public class Doctor : Employee
+    /*public class Doctor : Employee
     {
         public Specialization Specialty { get; set; }
         private string _pwz;
@@ -84,7 +84,7 @@ class Employees
 
     }
     
-    /*public class Nurse : Employee
+    public class Nurse : Employee
     {
 
     }

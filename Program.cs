@@ -4,7 +4,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        var doctor1 = new Doctor("John", "Smith", 123456789, "johnsmith", "bestpasswordever", Doctor.Specialization.Neurologist, "1234567");
+        /*var doctor1 = new Doctor("John", "Smith", 123456789, "johnsmith", "bestpasswordever", Doctor.Specialization.Neurologist, "1234567");
         Console.WriteLine("===== Doctor Details =====");
         Console.WriteLine($"Name: {doctor1.Name} {doctor1.Surname}");
         Console.WriteLine($"Specialization: {doctor1.Specialty}");
@@ -23,5 +23,23 @@ class Program
         {
             Console.WriteLine("Password is incorrect!");
         }
+        */
+
+        Nurse nurse = new Nurse("Jane", "Smith", 987654321, "jsmith", "password321");
+        Console.WriteLine("===== Doctor Details =====");
+        Console.WriteLine($"Name: {nurse.Name} {nurse.Surname}");
+        Console.WriteLine("===== Password Test =====");
+        Console.WriteLine("Enter password for Jane Smith:");
+        string inputPassword = Console.ReadLine();
+        if (nurse.VerifyPassword(inputPassword))
+        {
+            Console.WriteLine("Password is correct!");
+        }
+        else
+        {
+            Console.WriteLine("Password is incorrect!");
+        }
+        nurse.AddOnCallDay(new DateTime(2024, 12, 2));
+        nurse.DisplayOnCallSchedule(12);
     }
 }
