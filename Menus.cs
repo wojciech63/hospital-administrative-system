@@ -10,7 +10,6 @@ namespace Project_1_OOP_Wojciech_Dabrowski
         public static void MainMenu()
         {
             EmployeeManager.AddEmployee(new Administrator("Admin", "Adminson", 111222333, "admin1", "password", Employee.Role.Administrator));
-            EmployeeManager.SeedEmployees();
             string directoryPath = @"C:\Users\wojt6\source\repos\Project_1_OOP_Wojciech_Dabrowski\Employees list";
             if (!Directory.Exists(directoryPath))
             {
