@@ -1,6 +1,7 @@
 ﻿using Project_1_OOP_Wojciech_Dabrowski.Employees;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Project_1_OOP_Wojciech_Dabrowski
 {
@@ -20,87 +21,91 @@ namespace Project_1_OOP_Wojciech_Dabrowski
 
         public static void SeedEmployees()
         {
-            _employees.Add(new Doctor("John", "Doe", 123456789, "doctor1", "securepassword", Doctor.Specialization.Cardiologist, "1234567", Employee.Role.Doctor));
-            _employees.Add(new Nurse("Jane", "Smith", 987654321, "nurse1", "password", Employee.Role.Nurse));
-            _employees.Add(new Administrator("Mike", "Tyson", 111222333, "admin1", "adminpass", Employee.Role.Administrator));
-            Console.WriteLine($"Seeded {_employees.Count} employees."); // Debug output
+            if (_employees.Count == 0) 
+            {
+                _employees.Add(new Doctor("John", "Doe", 123456789, "doctor1", "password", Doctor.Specialization.Cardiologist, "1234567", Employee.Role.Doctor));
+                _employees.Add(new Nurse("Jane", "Smith", 987654321, "nurse1", "password", Employee.Role.Nurse));
+                _employees.Add(new Administrator("Admin", "Adminson", 111222333, "admin1", "password", Employee.Role.Administrator));
+                Console.WriteLine("Initial employees seeded.");
+            }
         }
-
 
         public static void SaveToFile(string filePath)
         {
-            Console.WriteLine($"Number of employees to save: {_employees.Count}");
-
-            using (StreamWriter writer = new StreamWriter(filePath))
+            try
             {
-                foreach (var employee in _employees)
+                using (StreamWriter writer = new(filePath))
                 {
-                    if (employee is Doctor doctor)
+                    foreach (var employee in _employees)
                     {
-                        string line = $"Doctor|{doctor.Name}|{doctor.Surname}|{doctor.PESEL}|{doctor.Username}|{doctor.UserRole}|{doctor.Specialty}|{doctor.GetOnCallScheduleString()}";
-                        writer.WriteLine(line);
-                        Console.WriteLine($"Writing: {line}"); 
-                    }
-                    else if (employee is Nurse nurse)
-                    {
-                        string line = $"Nurse|{nurse.Name}|{nurse.Surname}|{nurse.PESEL}|{nurse.Username}|{nurse.UserRole}|{nurse.GetOnCallScheduleString()}";
-                        writer.WriteLine(line);
-                        Console.WriteLine($"Writing: {line}");
-                    }
-                    else if (employee is Administrator admin)
-                    {
-                        string line = $"Administrator|{admin.Name}|{admin.Surname}|{admin.PESEL}|{admin.Username}|{admin.UserRole}";
-                        writer.WriteLine(line);
-                        Console.WriteLine($"Writing: {line}"); 
+                        if (employee is Doctor doctor)
+                        {
+                            writer.WriteLine($"Doctor|{doctor.Name}|{doctor.Surname}|{doctor.PESEL}|{doctor.Username}|{doctor.UserRole}|{doctor.Specialty}|{doctor.GetOnCallScheduleString()}");
+                        }
+                        else if (employee is Nurse nurse)
+                        {
+                            writer.WriteLine($"Nurse|{nurse.Name}|{nurse.Surname}|{nurse.PESEL}|{nurse.Username}|{nurse.UserRole}|{nurse.GetOnCallScheduleString()}");
+                        }
+                        else if (employee is Administrator admin)
+                        {
+                            writer.WriteLine($"Administrator|{admin.Name}|{admin.Surname}|{admin.PESEL}|{admin.Username}|{admin.UserRole}");
+                        }
                     }
                 }
+                Console.WriteLine("Data saved successfully.");
             }
-            Console.WriteLine($"Data saved successfully to {filePath}.");
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error saving to file: {ex.Message}");
+            }
         }
-
 
         public static void LoadFromFile(string filePath)
         {
             if (!File.Exists(filePath))
             {
-                Console.WriteLine("No data file found. Starting with an empty employee list.");
+                Console.WriteLine("Data file not found. Starting fresh.");
                 return;
             }
 
-            _employees.Clear();
-
-            using (StreamReader reader = new StreamReader(filePath))
+            try
             {
-                string? line;
-                while ((line = reader.ReadLine()) != null)
+                _employees.Clear();
+
+                using (StreamReader reader = new(filePath))
                 {
-                    Console.WriteLine($"Reading line: {line}"); // Debug output
-                    var parts = line.Split('|');
-                    if (parts[0] == "Doctor")
+                    string? line;
+                    while ((line = reader.ReadLine()) != null)
                     {
-                        var doctor = new Doctor(
-                            parts[1], parts[2], int.Parse(parts[3]), parts[4], "password", // Replace "password" as needed
-                            Enum.Parse<Doctor.Specialization>(parts[6]), parts[7], Employee.Role.Doctor);
-                        doctor.LoadOnCallScheduleFromString(parts[8]);
-                        _employees.Add(doctor);
-                    }
-                    else if (parts[0] == "Nurse")
-                    {
-                        var nurse = new Nurse(
-                            parts[1], parts[2], int.Parse(parts[3]), parts[4], "password", Employee.Role.Nurse);
-                        nurse.LoadOnCallScheduleFromString(parts[6]);
-                        _employees.Add(nurse);
-                    }
-                    else if (parts[0] == "Administrator")
-                    {
-                        _employees.Add(new Administrator(parts[1], parts[2], int.Parse(parts[3]), parts[4], "password", Employee.Role.Administrator));
+                        var parts = line.Split('|');
+                        if (parts[0] == "Doctor")
+                        {
+                            var doctor = new Doctor(
+                                parts[1], parts[2], int.Parse(parts[3]), parts[4], "password", // Placeholder password
+                                Enum.Parse<Doctor.Specialization>(parts[6]), parts[7], Employee.Role.Doctor);
+                            doctor.LoadOnCallScheduleFromString(parts[8]);
+                            _employees.Add(doctor);
+                        }
+                        else if (parts[0] == "Nurse")
+                        {
+                            var nurse = new Nurse(
+                                parts[1], parts[2], int.Parse(parts[3]), parts[4], "password", Employee.Role.Nurse);
+                            nurse.LoadOnCallScheduleFromString(parts[6]);
+                            _employees.Add(nurse);
+                        }
+                        else if (parts[0] == "Administrator")
+                        {
+                            _employees.Add(new Administrator(
+                                parts[1], parts[2], int.Parse(parts[3]), parts[4], "password", Employee.Role.Administrator));
+                        }
                     }
                 }
+                Console.WriteLine($"Loaded {_employees.Count} employees from file.");
             }
-            Console.WriteLine($"Loaded {_employees.Count} employees from file."); // Debug output
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading from file: {ex.Message}");
+            }
         }
-
-
-
     }
 }
