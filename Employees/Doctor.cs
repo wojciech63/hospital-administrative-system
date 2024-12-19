@@ -1,9 +1,5 @@
-﻿using Microsoft.VisualBasic;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Project_1_OOP_Wojciech_Dabrowski.Employees
 {
@@ -16,85 +12,100 @@ namespace Project_1_OOP_Wojciech_Dabrowski.Employees
             Neurologist,
             Laryngologist
         }
+
         public Specialization Specialty { get; set; }
-        private string _pwz;
-        public string PWZ
-        {
-            get { return _pwz; }
-            set
-            {
-                if (value.Length == 7 && value.All(char.IsDigit))
-                {
-                    _pwz = value;
-                }
-                else
-                {
-                    throw new ArgumentException("PWZ number must be 7 digits long and contain numbers only");
-                }
-            }
-        }
-
         private readonly Dictionary<int, List<DateTime>> _onCallSchedule = new();
-        private static readonly Dictionary<DateTime, HashSet<Specialization>> OnCallScheduleByDay = new();
 
-        public Doctor(string name, string surname, int pesel, string username, string password, Specialization specialty, string pwz, Role role) : base(name, surname, pesel, username, password, role)
+        public Doctor(string name, string surname, int pesel, string username, string password, Specialization specialty, string pwz, Role role)
+            : base(name, surname, pesel, username, password, role)
         {
             Specialty = specialty;
-            PWZ = pwz;
         }
 
         public bool AddOnCallDay(DateTime day)
         {
-
             int month = day.Month;
-
-            if (OnCallScheduleByDay.ContainsKey(day) && OnCallScheduleByDay[day].Contains(Specialty))
-            {
-                Console.WriteLine($"Error: {Specialty} is already on-call on {day.ToShortDateString()}");
-                return false;
-            }
-                       
             if (!_onCallSchedule.ContainsKey(month))
             {
                 _onCallSchedule[month] = new List<DateTime>();
             }
 
-            if (_onCallSchedule[month].Count >= 10)
+            if (_onCallSchedule[month].Count >= 10 || _onCallSchedule[month].Exists(d => Math.Abs((d - day).Days) == 1))
             {
-                Console.WriteLine($"Error: Cannot assign more than 10 on-call days for {month}");
-                return false;
-            }
-
-            if (_onCallSchedule[month].Any(d => Math.Abs((d - day).Days) == 1))
-            {
-                Console.WriteLine($"Error: Cannot assign consecutive on-call days in {month}");
+                Console.WriteLine("Error: Schedule conflicts or exceeds allowed days.");
                 return false;
             }
 
             _onCallSchedule[month].Add(day);
-            if (!OnCallScheduleByDay.ContainsKey(day))
-            {
-                OnCallScheduleByDay[day] = new HashSet<Specialization>();
-            }
-            OnCallScheduleByDay[day].Add(Specialty);
-            Console.WriteLine($"On call day {day:dd.MM.yyyy} added succesfully");
+            Console.WriteLine($"On-call day {day:yyyy-MM-dd} added successfully for Dr. {Name}.");
             return true;
+        }
+
+        public void RemoveOnCallDay(DateTime day)
+        {
+            int month = day.Month;
+            if (_onCallSchedule.ContainsKey(month) && _onCallSchedule[month].Remove(day))
+            {
+                Console.WriteLine($"On-call day {day:yyyy-MM-dd} removed successfully for Dr. {Name}.");
+            }
+            else
+            {
+                Console.WriteLine("Day not found in the schedule.");
+            }
+        }
+
+        public List<DateTime> GetOnCallScheduleForMonth(int month)
+        {
+            return _onCallSchedule.ContainsKey(month) ? _onCallSchedule[month] : new List<DateTime>();
         }
 
         public void DisplayOnCallSchedule(int month)
         {
             if (_onCallSchedule.ContainsKey(month))
             {
-                Console.WriteLine($"On-call schedule for {Name} in month {month}");
+                Console.WriteLine($"On-call schedule for Dr. {Name} in month {month}:");
                 foreach (var day in _onCallSchedule[month])
                 {
-                    Console.WriteLine(day.ToShortDateString());
+                    Console.WriteLine(day.ToString("yyyy-MM-dd"));
                 }
             }
             else
             {
-                Console.WriteLine($"No on-call schedule for {Name} in month {month}");
+                Console.WriteLine($"No on-call schedule for Dr. {Name} in month {month}.");
             }
         }
+
+        public string GetOnCallScheduleString()
+        {
+            var schedule = new List<string>();
+            foreach (var month in _onCallSchedule)
+            {
+                foreach (var day in month.Value)
+                {
+                    schedule.Add($"{month.Key}-{day:yyyy-MM-dd}");
+                }
+            }
+            return string.Join(",", schedule);
+        }
+
+        public void LoadOnCallScheduleFromString(string scheduleData)
+        {
+            var entries = scheduleData.Split(',', StringSplitOptions.RemoveEmptyEntries);
+            foreach (var entry in entries)
+            {
+                var parts = entry.Split('-');
+                int month = int.Parse(parts[0]);
+                DateTime day = DateTime.Parse(parts[1]);
+
+                if (!_onCallSchedule.ContainsKey(month))
+                {
+                    _onCallSchedule[month] = new List<DateTime>();
+                }
+
+                _onCallSchedule[month].Add(day);
+            }
+        }
+
+
     }
 }

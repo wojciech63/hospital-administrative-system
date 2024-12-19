@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Security.Cryptography;
-using System.Security.Principal;
+using System.Text;
 
 namespace Project_1_OOP_Wojciech_Dabrowski.Employees
 {
@@ -33,6 +30,7 @@ namespace Project_1_OOP_Wojciech_Dabrowski.Employees
             SetPassword(password);
             UserRole = userRole;
         }
+
         public void SetPassword(string password)
         {
             PasswordHash = HashPassword(password);
@@ -57,14 +55,11 @@ namespace Project_1_OOP_Wojciech_Dabrowski.Employees
             }
         }
 
-
         public static Employee? Login(string username, string password, List<Employee> employees)
         {
             var employee = employees.Find(e => e.Username == username);
-
             if (employee != null && employee.VerifyPassword(password))
             {
-                Console.WriteLine($"Welcome, {employee.Name} {employee.Surname} {employee.UserRole}");
                 return employee;
             }
             else
@@ -72,6 +67,6 @@ namespace Project_1_OOP_Wojciech_Dabrowski.Employees
                 Console.WriteLine("Invalid username or password");
                 return null;
             }
-    }
+        }
     }
 }
