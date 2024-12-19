@@ -8,7 +8,7 @@ namespace Project_1_OOP_Wojciech_Dabrowski.Employees
 {
     public class Nurse : Employee
     {
-        public Nurse(string name, string surname, int pesel, string username, string password) : base(name, surname, pesel, username, password)
+        public Nurse(string name, string surname, int pesel, string username, string password, Role role) : base(name, surname, pesel, username, password, role)
         {
 
         }

@@ -4,24 +4,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
+using System.Security.Principal;
 
 namespace Project_1_OOP_Wojciech_Dabrowski.Employees
 {
     public abstract class Employee
     {
+        public enum Role
+        {
+            Doctor,
+            Nurse,
+            Administrator
+        }
+
         public string Name { get; set; }
         public string Surname { get; set; }
         public int PESEL { get; set; }
         public string Username { get; set; }
         private string PasswordHash { get; set; }
+        public Role UserRole { get; set; }
 
-        public Employee(string name, string surname, int pesel, string username, string password)
+        public Employee(string name, string surname, int pesel, string username, string password, Role userRole)
         {
             Name = name;
             Surname = surname;
             PESEL = pesel;
             Username = username;
             SetPassword(password);
+            UserRole = userRole;
         }
         public void SetPassword(string password)
         {
@@ -46,5 +56,22 @@ namespace Project_1_OOP_Wojciech_Dabrowski.Employees
                 return builder.ToString();
             }
         }
+
+
+        public static Employee? Login(string username, string password, List<Employee> employees)
+        {
+            var employee = employees.Find(e => e.Username == username);
+
+            if (employee != null && employee.VerifyPassword(password))
+            {
+                Console.WriteLine($"Welcome, {employee.Name} {employee.Surname} {employee.UserRole}");
+                return employee;
+            }
+            else
+            {
+                Console.WriteLine("Invalid username or password");
+                return null;
+            }
+    }
     }
 }

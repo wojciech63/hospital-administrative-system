@@ -37,7 +37,7 @@ namespace Project_1_OOP_Wojciech_Dabrowski.Employees
         private readonly Dictionary<int, List<DateTime>> _onCallSchedule = new();
         private static readonly Dictionary<DateTime, HashSet<Specialization>> OnCallScheduleByDay = new();
 
-        public Doctor(string name, string surname, int pesel, string username, string password, Specialization specialty, string pwz) : base(name, surname, pesel, username, password)
+        public Doctor(string name, string surname, int pesel, string username, string password, Specialization specialty, string pwz, Role role) : base(name, surname, pesel, username, password, role)
         {
             Specialty = specialty;
             PWZ = pwz;
