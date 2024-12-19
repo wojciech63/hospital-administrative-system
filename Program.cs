@@ -5,7 +5,6 @@ class Program
 {
     static void Main(string[] args)
     {
-        EmployeeManager.SeedEmployees();
         Menus.MainMenu();
     }
 }
