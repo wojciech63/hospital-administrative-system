@@ -17,13 +17,19 @@ namespace Project_1_OOP_Wojciech_Dabrowski
             }
             string filePath = Path.Combine(directoryPath, "employees.txt");
 
-            EmployeeManager.SeedEmployees();
-            EmployeeManager.SaveToFile(filePath);
+            // Load employees from the file
             EmployeeManager.LoadFromFile(filePath);
+
+            // Add an admin only if the list is empty
+            if (EmployeeManager.GetAllEmployees().Count == 0)
+            {
+                EmployeeManager.AddEmployee(new Administrator("Default", "Admin", 111222333, "admin", "password", Employee.Role.Administrator));
+            }
 
             while (true)
             {
                 Console.Clear();
+                Console.WriteLine($"Saving file to: {Path.GetFullPath(filePath)}");
                 Console.WriteLine("Welcome to the Hospital System");
                 Console.WriteLine("1. Login");
                 Console.WriteLine("2. Save and Exit");
@@ -37,7 +43,7 @@ namespace Project_1_OOP_Wojciech_Dabrowski
                 else if (choice == "2")
                 {
                     EmployeeManager.SaveToFile(filePath);
-                    Console.WriteLine("Data saved successfully. Goodbye!");
+                    Console.WriteLine("Goodbye!");
                     break;
                 }
                 else
@@ -47,6 +53,7 @@ namespace Project_1_OOP_Wojciech_Dabrowski
                 }
             }
         }
+
 
         private static void Login()
         {
@@ -139,7 +146,13 @@ namespace Project_1_OOP_Wojciech_Dabrowski
             string surname = Console.ReadLine();
 
             Console.Write("Enter PESEL: ");
-            int pesel = int.Parse(Console.ReadLine());
+            int pesel;
+            while (!int.TryParse(Console.ReadLine(), out pesel))
+            {
+                Console.WriteLine("Invalid input. PESEL must be a number. Please try again:");
+            }
+
+            Console.WriteLine($"PESEL entered successfully: {pesel}");
 
             Console.Write("Enter Username: ");
             string username = Console.ReadLine();

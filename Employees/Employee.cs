@@ -57,7 +57,14 @@ namespace Project_1_OOP_Wojciech_Dabrowski.Employees
         public static Employee? Login(string username, string password, List<Employee> employees)
         {
             var employee = employees.Find(e => e.Username == username);
-            return employee != null && employee.VerifyPassword(password) ? employee : null;
+            if (employee != null && employee.VerifyPassword(password))
+            {
+                return employee;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
